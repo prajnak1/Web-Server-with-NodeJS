@@ -1,0 +1,1 @@
+yyyyMMdd	HH:mm:ss	750093ba-432c-4c49-b76e-61160ba26f27	Log event emitted!
