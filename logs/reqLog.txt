@@ -47,3 +47,29 @@ yyyyMMdd	HH:mm:ss	1da9b6c0-21dc-43e7-a9ea-43a2993788c6	/img/background-blur-clea
 yyyyMMdd	HH:mm:ss	5203b886-29e9-461c-82b9-732b3cca0e81	/data/data.json	GET
 yyyyMMdd	HH:mm:ss	ab0789e2-aada-40a4-88aa-07fa0fa14083	/	GET
 yyyyMMdd	HH:mm:ss	4c108cf3-4f32-469b-9ab7-ad46fa41fe42	/css/style.css	GET
+yyyyMMdd	HH:mm:ss	5e8ead89-0a19-4246-8f11-a8f6e59d3ac7	GET	undefined	/
+yyyyMMdd	HH:mm:ss	c8838091-a9e0-461d-bcb9-c0eeb76c5b73	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	50cdb0ea-ae5a-42a5-8466-202974f7d0aa	GET	undefined	/
+yyyyMMdd	HH:mm:ss	266bc7ad-7fea-4ef2-98ee-74c0fbaf4e24	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	847a3261-db29-4fe5-8186-f125332784de	GET	undefined	/
+yyyyMMdd	HH:mm:ss	4cec2067-a9ce-4ccd-9fc7-30cf613e6bf2	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	21683d7a-4850-4b37-b18a-c8d18f976189	OPTIONS	https://www.google.com	/
+yyyyMMdd	HH:mm:ss	d4660ba7-e4ae-425b-b9f4-c65e932fb70d	GET	https://www.google.com	/
+yyyyMMdd	HH:mm:ss	17f522f8-c072-4fe2-9601-b2f8ffd70e48	GET	undefined	/
+yyyyMMdd	HH:mm:ss	8f7adfff-376f-48d1-8622-31669d3294a2	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	6ab99b1d-d955-44ee-a5e1-5d5b5eda12c8	GET	undefined	/
+yyyyMMdd	HH:mm:ss	35b5f9e6-d8e2-4437-a20b-21c4033518f2	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	18983d3e-78e3-48dc-9bf6-c168e3684650	GET	undefined	/
+yyyyMMdd	HH:mm:ss	e2c9b1b2-9667-4187-9893-913eeff3fdda	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	145d7c3c-46c6-412c-b51a-0ad4c33e2c60	GET	undefined	/
+yyyyMMdd	HH:mm:ss	ba211ece-3cde-4d6b-910f-6214be2cb926	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	2d876900-516c-41d6-ad03-57b05a7fdbd1	GET	undefined	/
+yyyyMMdd	HH:mm:ss	1d5fdaab-067b-42f5-bfb9-628e0651a33b	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	aa0a1445-01ba-4390-ab99-526978806c68	GET	undefined	/
+yyyyMMdd	HH:mm:ss	58f2ed24-19b4-4b81-a10e-cbfbb87e41fa	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	865f7f86-0b58-4afd-977c-b55ef9f3a0b1	GET	undefined	/
+yyyyMMdd	HH:mm:ss	fa9bf206-4de0-425f-94af-d6bc41690272	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	ce8c38cd-4d49-4180-a3d1-f79f48820931	GET	undefined	/dave
+yyyyMMdd	HH:mm:ss	14033104-d662-4179-8665-92ef3326dbfb	GET	undefined	/css/style.css
+yyyyMMdd	HH:mm:ss	9a346862-d6e1-4731-87e1-e6fe9bfe1614	GET	undefined	/dave
+yyyyMMdd	HH:mm:ss	876d4063-30ef-4ae4-a547-273d5d100402	GET	undefined	/css/style.css

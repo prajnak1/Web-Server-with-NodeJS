@@ -1,104 +1,93 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 const path = require('path');
-const fs = require('fs');
-const fsPromises = require('fs').promises;
-
-const logEvents = require("./logEvents");
-const EventEmitter = require('events');
-class Emitter extends EventEmitter{};
-// initialize object
-const myEmitter = new Emitter();
-myEmitter.on('log',(msg,fileName)=>logEvents(msg,fileName));
+const cors = require('cors');
+const {logger} = require('./middleware/logEvents');
+//don't need curly braces if it's one function
+const errorHandler = require('./middleware/errorHandler');
 const PORT = process.env.PORT || 3502;
 
-const serveFile = async (filePath, contentType,response)=>{
-    try{
-        const rawData = await fsPromises.readFile(filePath, !contentType.includes('image') ? 'utf8': '');
-        const data = contentType === 'application/json'
-            ?JSON.parse(rawData) : rawData;
-        response.writeHead(filePath.includes('404.html')?404:200,{'Content-Type':contentType});
-        response.end(
-            contentType === 'application/json' ? JSON.stringify(data) : data
-        );
-    }catch(err){
-        console.log(err);
-        myEmitter.emit('log',`${err.name}:${err.message}`,'errLog.txt');
-        response.statusCode = 500;
-        response.end();
-    }
+
+// custom middleware logger
+app.use(logger);
+//cross origin resource sharing
+//127.0.0.1:5500 is the same as having localhost
+//yoursite is the domain of front end project
+const whitelist = ['https://www.yoursite.com','http://127.0.0.1:5500/','http://localhost:3502']
+const corsOptions = {
+    origin:(origin,callback) => {
+        if(whitelistlist.indexOf(origin)!==-1){
+            callback(null,true)
+        }else{
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    optionsSuccessStatus:200
+}
+app.use(cors());
+// built-in middleware to handle url encoded data
+//in other words, form data
+app.use(express.urlencoded({extended: false}));
+
+//built in middleware for json
+app.use(express.json());
+
+//serve static files
+app.use(express.static(path.join(__dirname,'/public')));
+
+app.get('^/$|index(.html)?',(req,res)=>{
+    //res.sendFile('./views/index.html',{root:__dirname });
+    res.sendFile(path.join(__dirname,'views','index.html'));
+});
+app.get('/new-page.html',(req,res)=>{
+    res.sendFile(path.join(__dirname,'views','new-page.html'));
+});
+app.get('/old-page.html',(req,res)=>{
+    res.redirect(301,'/new-page.html');//302 by default
+});
+
+//Route handlers
+app.get('/hello.(html)?',(req,res,next)=>{
+    console.log('attempted to load hello.html')
+    next()
+},(req,res)=>{
+    res.send('Hello World!');
+});
+
+//chaining route handlers
+const one = (req,res,next) =>{
+    console.log('one');
+    next();
+}
+const two = (req,res,next) =>{
+    console.log('two');
+    next();
+}
+const three = (req,res) =>{
+    console.log('three');
+    res.send('Finished');
 }
 
+app.get('/chain(.html)?',[one,two,three]);
 
-const server = http.createServer((req,res)=>{
-    console.log(req.url, req.method);
-    myEmitter.emit('log',`${req.url}\t${req.method}`,'reqLog.txt');
-
-    const extension = path.extname(req.url);
-    let contentType;
-    switch(extension){
-        case '.css':
-            contentType='text/css';
-            break;
-        case '.js':
-            contentType = 'text/javascript'
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.jpeg':
-            contentType = 'image/jpg';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-        case '.txt':
-            contentType = 'text/plain';
-            break;
-        default:
-            contentType = 'text/html';
+app.all('*',(req,res)=>{
+    res.status(404);
+    if(req.accepts('html')){
+        res.sendFile(path.join(__dirname,'views','404.html'));
     }
-    let filePath = 
-    //if the content type is html and the url is a slash, execute the next line
-        contentType === 'text/html' && req.url==='/'
-        //set path name using views directory and dirname, set it to index html. If that's not the case, look at the next condition
-            ? path.join (__dirname, 'views','index.html')
-
-            : contentType === 'text/html' && req.url.slice(-1)==='/'
-                ?path.join(__dirname, 'views',req.url,'index.html')
-                //if text is html, then execute first line
-                : contentType === 'text/html'
-                //look at whatever is requested in the views folder because that's where the html should be.
-                    ?path.join(__dirname,'views',req.url)
-                    //if not, can be css or anythinng else
-                    :path.join(__dirname,req.url);
-//-1 is the last character of the url
-//makes html extension not required in the browser
-    if(!extension && req.url.slice(-1)!=='/') filePath += 'html';
-    const fileExists = fs.existsSync(filePath);
-    if(fileExists){
-        //serve the file
-        serveFile(filePath, contentType, res);
+    else if(req.accepts('json')){
+        res.json({error:"404 Not Found"});
     }else{
-        //404
-        //301 redirect
-        switch(path.parse(filePath).base){
-            case 'old-page.html':
-                res.writeHead(301,{'Location':'/new-page.html'});
-                //end response
-                res.end();
-                break;
-            case 'wwww-page.html':
-                res.writeHead(301,{'Location':'/'});
-                //end response
-                res.end();
-                break;
-            default:
-                //serve a 404 response
-                serveFile(path.join(__dirname, 'views','404.html'), 'text/html', res);
-        }
+        res.type('txt').send("404 Not Found");
     }
-});
-server.listen(PORT,()=>console.log(`Server running on port ${PORT}`))
+})
+
+
+//has an error parameter
+//send message to be sent to the browser
+app.use(errorHandler);
+
+app.listen(PORT,()=>console.log(`Server running on port ${PORT}`))
 
 
 
